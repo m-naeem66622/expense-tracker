@@ -113,13 +113,18 @@ label {
 input[type='text'],
 input[type='number'] {
   border: 1px solid #dedede;
-  border-right: none;
   outline: none;
   border-radius: 5px;
   display: block;
   font-size: 16px;
   padding: 10px;
   width: 100%;
+}
+
+input[type='text']:not(input#description),
+input[type='number']:not(input#description) {
+  border: 1px solid #dedede;
+  border-right-color: transparent;
 }
 
 input[type='text']:focus,
@@ -194,8 +199,8 @@ border-color: #2da3ad;
   padding: 2px 5px;
   position: absolute;
   top: 50%;
-  left: 0;
-  transform: translate(-100%, -50%);
+  right: 0;
+  transform: translate(100%, -50%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -233,7 +238,7 @@ border-bottom-left-radius: 0px;
 .toggle-button {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
-  border-left: none;
+  border-left-color: transparent;
 }
 
 .secondary-actions {
@@ -241,7 +246,7 @@ border-bottom-left-radius: 0px;
   top: 100%;
   left: 0;
   margin-top: 4px;
-  padding: 0;
+  padding: 5px 0;
   list-style: none;
   background-color: #fff;
   border: 1px solid #dedede;
@@ -256,6 +261,11 @@ border-bottom-left-radius: 0px;
 
 .secondary-actions li {
   padding: 8px;
+  cursor: pointer;
+}
+
+.secondary-actions li:hover{
+  background-color: #2da3ad;
 }
 
 .secondary-actions button {
@@ -265,8 +275,4 @@ border-bottom-left-radius: 0px;
   background: none;
   border: none;
   cursor: pointer;
-}
-
-.secondary-actions button:hover {
-  background-color: #f1f8ff;
 }

@@ -108,7 +108,7 @@ const SplitButton = ({ handleSelectOption }) => {
   const options = ["Income", "Expense"];
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(options[0]);
-  console.log(handleSelectOption);
+
   const handleButtonClick = (option) => {
     setSelectedOption(option);
     setOpen(false);
@@ -136,10 +136,8 @@ const SplitButton = ({ handleSelectOption }) => {
       {open && (
         <ul className="secondary-actions">
           {options.map((option) => (
-            <li key={option}>
-              <button type="button" onClick={() => handleButtonClick(option)}>
-                {option}
-              </button>
+            <li key={option} onClick={() => handleButtonClick(option)}>
+              <button type="button">{option}</button>
             </li>
           ))}
         </ul>

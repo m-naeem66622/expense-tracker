@@ -8,7 +8,7 @@ import TransactionHistory from "./components/TransactionHistory";
 import AddTransaction from "./components/AddTransaction";
 
 function App() {
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState({});
   const [option, setOption] = useState("income");
   const inputAmountRef = useRef();
   const inputDescriptionRef = useRef();
@@ -18,30 +18,40 @@ function App() {
     e.preventDefault();
 
     // get the value and make sure it is positive
-    const inputAmount = Math.abs(inputAmountRef.current.value.trim());
-    const inputDescription = inputDescriptionRef.current.value.trim();
+    const amount = Math.abs(inputAmountRef.current.value.trim());
+    const description = inputDescriptionRef.current.value.trim();
 
-    // return/exit the function if input value is 0 or empty string
-    if (!(inputAmount && inputDescription)) return;
+    // return/exit the function if input values is 0 or empty string
+    if (!(amount && description)) return;
+
+    // generate an id
+    const id = uuidv4();
 
     // create an object
-    let obj = { id: uuidv4(), type: option };
+    let obj = { id, type: option, description };
     if (option === "income") {
-      obj = { ...obj, amount: Number(inputAmount) };
+      obj = { ...obj, amount: Number(amount) };
     } else {
-      obj = { ...obj, amount: Number(inputAmount) * -1 };
+      obj = { ...obj, amount: Number(amount) * -1 };
     }
 
-    console.log(obj);
     // update the transactions state
-    setTransactions((prevState) => [...prevState, obj]);
+    setTransactions((prevState) => ({ ...prevState, [id]: obj }));
 
-    // reset the input value
+    // reset the input values
     inputAmountRef.current.value = "";
+    inputDescriptionRef.current.value = "";
   };
 
   const handleDeleteTransaction = (id) => {
-    console.log(id);
+    // make a copy of transactions to delete a specific transactions from it.
+    const tempTransactions = { ...transactions };
+
+    // delete key from the object based on id
+    delete tempTransactions[id];
+
+    // set the transactions state with updated transactions
+    setTransactions(tempTransactions);
   };
 
   // get the selected option from the <SplitButton /> and update the option state
@@ -51,7 +61,7 @@ function App() {
 
   // calculate the total balance, income and expense
   const calculator = (type) =>
-    transactions.reduce((accumulator, element) => {
+    Object.values(transactions).reduce((accumulator, element) => {
       // to calculate for income and expense only
       if (element.type === type) {
         return accumulator + element.amount;
@@ -78,7 +88,7 @@ function App() {
           handleSelectOption={handleSelectOption}
         />
         <TransactionHistory
-          transactions={transactions}
+          transactions={Object.values(transactions)}
           handleDeleteTransaction={handleDeleteTransaction}
         />
       </div>

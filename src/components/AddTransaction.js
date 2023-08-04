@@ -3,7 +3,7 @@ import SplitButton from "./SplitButton";
 
 function AddTransaction({ handleOnSubmit, refs, handleSelectOption }) {
   const { inputAmountRef, inputDescriptionRef } = refs;
-  console.log(handleSelectOption);
+
   return (
     <div>
       <h3>Add New Transaction</h3>

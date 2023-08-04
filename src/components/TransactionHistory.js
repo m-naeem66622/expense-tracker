@@ -8,7 +8,13 @@ function TransactionHistory({ transactions, handleDeleteTransaction }) {
         {transactions.map((transaction) => (
           <li key={transaction.id} className={transaction.type}>
             {transaction.description}
-            <span>{transaction.amount}</span>
+            <span
+              className={`${
+                transaction.type === "income" ? "text-lime-500" : "text-red-600"
+              }`}
+            >
+              Rs. {transaction.amount}
+            </span>
             <button
               className="delete-btn"
               onClick={() => handleDeleteTransaction(transaction.id)}
