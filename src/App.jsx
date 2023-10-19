@@ -23,6 +23,7 @@ function App() {
 
     // return/exit the function if input values is 0 or empty string
     if (!(amount && description)) return;
+    
 
     // generate an id
     const id = uuidv4();
